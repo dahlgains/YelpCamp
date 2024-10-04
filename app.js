@@ -33,12 +33,13 @@ const reviewRoutes = require('./routes/reviews');
 const userRoutes = require('./routes/users');
 
 const dbUrl = process.env.DB_URL;
+const secret = process.env.SECRET;
 
 const store = MongoStore.create({
   mongoUrl: dbUrl,
   touchAfter: 24 * 60 * 60,
   crypto: {
-    secret: 'thisshouldbeabettersecret!',
+    secret: secret,
   },
   autoRemove: 'interval',
   autoRemoveInterval: '5',
@@ -119,7 +120,7 @@ app.use(mongoSanitize());
 const sessionConfig = {
   store,
   name: 'session',
-  secret: 'thisshouldbeabettersecret',
+  secret: secret,
   resave: false,
   saveUninitialized: true,
   cookie: {
